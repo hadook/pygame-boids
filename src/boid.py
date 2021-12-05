@@ -1,5 +1,4 @@
 import pygame
-from random import randrange
 from vector import Vector
 
 

@@ -1,6 +1,5 @@
 import sys
 import pygame
-from vector import Vector
 from boid import Boid
 
 

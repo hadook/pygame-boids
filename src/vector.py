@@ -1,4 +1,4 @@
-from random import random, triangular
+from random import random, uniform, triangular
 import pygame
 
 
@@ -17,9 +17,21 @@ class Vector(pygame.math.Vector2):
         return self.as_polar()[1]
 
     @classmethod
-    def random(cls, max_magnitude):
-        magnitude = triangular(0, max_magnitude, max_magnitude)
-        angle = random() * 360
-        v = Vector()
-        v.from_polar((magnitude, angle))
-        return v
+    def random(cls, **kwargs):
+        max_magnitude = kwargs.get("max_magnitude")
+        max_x = kwargs.get("max_x")
+        max_y = kwargs.get("max_y")
+        margin = kwargs.get("margin")
+
+        if max_magnitude is not None:
+            magnitude = triangular(0, max_magnitude, max_magnitude)
+            angle = random() * 360
+            v = Vector()
+            v.from_polar((magnitude, angle))
+            return v
+        else:
+            if margin is None:
+                margin = 0
+            x = uniform(0 - margin, max_x + margin)
+            y = uniform(0 - margin, max_y + margin)
+            return Vector(x, y)
