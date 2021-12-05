@@ -1,4 +1,5 @@
 import pygame
+from config import Canvas
 from vector import Vector
 
 
@@ -6,18 +7,32 @@ from vector import Vector
 class Boid(pygame.sprite.Sprite):
 
     max_force = 1
-    max_speed = 1
+    max_speed = 4
     art = pygame.image.load('../art/boid.png')
 
     def __init__(self):
         super().__init__()
 
-        self.position = Vector()
-        self.velocity = Vector()
+        self.position = Vector.random(max_x=Canvas.width, max_y=Canvas.height, margin=Canvas.margin)
+        self.velocity = Vector.random(max_magnitude=self.max_speed)
 
-        # self.image = pygame.transform.rotozoom(self.art)
+        self.image = pygame.transform.rotozoom(self.art, (-1) * self.velocity.angle, 1)
+        self.rect = self.art.get_rect(center=self.position)
 
+    def update(self):
+        self.position += self.velocity
+        self.wrap_edge()
+        self.rect.center = self.position.int
 
+    def wrap_edge(self):
+        if self.position.x < 0 - Canvas.margin:
+            self.position.x = Canvas.width + Canvas.margin
+        if self.position.x > Canvas.width + Canvas.margin:
+            self.position.x = 0 - Canvas.margin
+        if self.position.y < 0 - Canvas.margin:
+            self.position.y = Canvas.height + Canvas.margin
+        if self.position.y > Canvas.height + Canvas.margin:
+            self.position.y = 0 - Canvas.margin
 
 
     #     self.art = pygame.image.load("../art/boid.png")

@@ -1,13 +1,13 @@
 import sys
 import pygame
+from config import Canvas
 from boid import Boid
 
 
 def main():
     pygame.init()
     clock = pygame.time.Clock()
-    screen_width, screen_height = 1600, 900
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    screen = pygame.display.set_mode((Canvas.width, Canvas.height))
 
     flock = pygame.sprite.Group()
 
