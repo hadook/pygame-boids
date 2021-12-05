@@ -11,7 +11,7 @@ def main():
 
     flock = pygame.sprite.Group()
 
-    for i in range(20):
+    for i in range(50):
         boid = Boid()
         flock.add(boid)
 
