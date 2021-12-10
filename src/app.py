@@ -13,8 +13,13 @@ def main():
     flock = pygame.sprite.Group()
     boids = []
 
-    for i in range(44):
+    for i in range(50):
         boid = Boid()
+        boids.append(boid)
+        flock.add(boid)
+
+    for i in range(10):
+        boid = Boid(pygame.Color('indianred'))
         boids.append(boid)
         flock.add(boid)
 
@@ -24,21 +29,10 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        # # seek
-        # if pygame.mouse.get_pressed()[0] == True:
-        #     target = Vector(pygame.mouse.get_pos())
-        #     for boid in boids:
-        #         boid.seek(target)
-
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_SPACE:
-            #         boid.reset()
-
-        # keys = pygame.key.get_pressed()
-        # if keys[pygame.K_LEFT]:
-        #     boid.turn_left()
-        # if keys[pygame.K_RIGHT]:
-        #     boid.turn_right()
+        if pygame.mouse.get_focused():
+            target = Vector(pygame.mouse.get_pos())
+            for b in boids:
+                b.seek(target)
 
         screen.fill((30, 30, 30))
         flock.update()
