@@ -6,8 +6,9 @@ from vector import Vector
 # Represents a single boid object
 class Boid(pygame.sprite.Sprite):
 
-    max_force = 0.5
+    max_force = 0.1
     max_speed = 4
+    orientation = 300
     art = pygame.image.load('../art/boid.png')
 
     def __init__(self):
@@ -36,43 +37,7 @@ class Boid(pygame.sprite.Sprite):
             self.position.y = 0 - Canvas.margin
 
     def seek(self, target: Vector):
-
-
-
-        desired_velocity = Vector(self.position - target)
-        desired_velocity.normalize_ip()
-        desired_velocity.scale_to_length(self.max_speed)
-        steering = Vector(desired_velocity - self.velocity)
-        steering.scale_to_length(self.max_force)
-        self.velocity = Vector(self.velocity + steering)
-        self.velocity.scale_to_length(self.max_speed)
-
-
-    #     self.art = pygame.image.load("../art/boid.png")
-    #
-    #     self.vel = 4
-    #     self.turn = 3
-    #     self.pos = Vector()
-    #     self.dir = Vector()
-    #     self.reset()
-    #
-    #     self.image = pygame.transform.rotozoom(self.art, (-1) * self.dir.as_polar()[1], 1)
-    #     self.rect = self.art.get_rect(center=self.pos)
-    #
-    # def update(self):
-    #     self.image = pygame.transform.rotozoom(self.art, (-1) * self.dir.as_polar()[1], 1)
-    #     self.pos += self.vel * self.dir
-    #     self.rect.center = self.pos.int()
-    #
-    # def reset(self):
-    #     self.pos = Vector(800, 450)
-    #     self.dir = Vector()
-    #     self.dir.randomize()
-    #     print("theta =", self.dir.as_polar()[1])
-    #
-    # def turn_left(self):
-    #     self.dir.rotate_ip(self.turn * -1)
-    #
-    # def turn_right(self):
-    #     self.dir.rotate_ip(self.turn * 1)
-
+        if (target - self.position).magnitude() < self.orientation:
+            desired_velocity = (target - self.position).normalize() * self.max_speed
+            steering = (desired_velocity - self.velocity).truncate(self.max_force)
+            self.velocity = (self.velocity + steering).truncate(self.max_speed)
