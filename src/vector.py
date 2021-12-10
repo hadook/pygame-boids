@@ -26,6 +26,9 @@ class Vector(pygame.math.Vector2):
         if self.magnitude() > max_magnitude:
             self.scale_to_length(max_magnitude)
 
+    def normalize(self):
+        return self.__class__(super().normalize())
+
     @classmethod
     def random(cls, **kwargs):
         max_magnitude = kwargs.get("max_magnitude")
