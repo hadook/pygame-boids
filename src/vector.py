@@ -66,3 +66,13 @@ class Vector(pygame.math.Vector2):
 
     def __rmul__(self, other):
         return self.__class__(super().__rmul__(other))
+
+    def __iadd__(self, other):
+        self.x += other.x
+        self.y += other.y
+        return self
+
+    def __isub__(self, other):
+        self.x -= other.x
+        self.y -= other.y
+        return self
