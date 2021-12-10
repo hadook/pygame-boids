@@ -45,3 +45,21 @@ class Vector(pygame.math.Vector2):
             x = uniform(0 - margin, max_x + margin)
             y = uniform(0 - margin, max_y + margin)
             return Vector(x, y)
+
+    def __add__(self, other):
+        return self.__class__(super().__add__(other))
+
+    def __sub__(self, other):
+        return self.__class__(super().__sub__(other))
+
+    def __mul__(self, other):
+        return self.__class__(super().__mul__(other))
+
+    def __radd__(self, other):
+        return self.__class__(self + other)
+
+    def __rsub__(self, other):
+        return self.__class__(other.x - self.x, other.y - self.y)
+
+    def __rmul__(self, other):
+        return self.__class__(super().__rmul__(other))
