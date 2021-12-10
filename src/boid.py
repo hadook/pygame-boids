@@ -1,5 +1,5 @@
-import pygame
 from random import triangular
+import pygame
 from config import Canvas
 from vector import Vector
 
@@ -9,7 +9,7 @@ class Boid(pygame.sprite.Sprite):
 
     max_force = 0.1
     max_speed = 4
-    orientation = 300
+    orientation = 100
 
     def __init__(self, color=pygame.Color('cornflowerblue')):
         super().__init__()
@@ -45,8 +45,19 @@ class Boid(pygame.sprite.Sprite):
         if self.position.y > Canvas.height + Canvas.margin:
             self.position.y = 0 - Canvas.margin
 
-    def seek(self, target: Vector):
+    def seek(self, target):
         if (target - self.position).magnitude() < self.orientation:
             desired_velocity = (target - self.position).normalize() * self.max_speed
             steering = (desired_velocity - self.velocity).truncate(self.max_force)
+            self.velocity = (self.velocity + steering).truncate(self.max_speed)
+
+    def separate(self, boids):
+        steering = Vector()
+        for other in boids:
+            v = self.position - other.position
+            if 0 < v.magnitude() < self.orientation:
+                repulsion = v.normalize() * (1 / v.magnitude_squared())
+                steering += repulsion
+        if steering.magnitude() > 0:
+            steering = steering.normalize() * self.max_force
             self.velocity = (self.velocity + steering).truncate(self.max_speed)
