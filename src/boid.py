@@ -6,7 +6,7 @@ from vector import Vector
 # Represents a single boid object
 class Boid(pygame.sprite.Sprite):
 
-    max_force = 1
+    max_force = 0.5
     max_speed = 4
     art = pygame.image.load('../art/boid.png')
 
@@ -22,6 +22,7 @@ class Boid(pygame.sprite.Sprite):
     def update(self):
         self.position += self.velocity
         self.wrap_edge()
+        self.image = pygame.transform.rotozoom(self.art, (-1) * self.velocity.angle, 1)
         self.rect.center = self.position.int
 
     def wrap_edge(self):
@@ -33,6 +34,18 @@ class Boid(pygame.sprite.Sprite):
             self.position.y = Canvas.height + Canvas.margin
         if self.position.y > Canvas.height + Canvas.margin:
             self.position.y = 0 - Canvas.margin
+
+    def seek(self, target: Vector):
+
+
+
+        desired_velocity = Vector(self.position - target)
+        desired_velocity.normalize_ip()
+        desired_velocity.scale_to_length(self.max_speed)
+        steering = Vector(desired_velocity - self.velocity)
+        steering.scale_to_length(self.max_force)
+        self.velocity = Vector(self.velocity + steering)
+        self.velocity.scale_to_length(self.max_speed)
 
 
     #     self.art = pygame.image.load("../art/boid.png")

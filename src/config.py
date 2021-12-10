@@ -1,5 +1,5 @@
 
 class Canvas:
-    width = 800
-    height = 600
-    margin = 20
+    width = 1600
+    height = 900
+    margin = 30
