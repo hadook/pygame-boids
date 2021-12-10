@@ -16,6 +16,16 @@ class Vector(pygame.math.Vector2):
     def angle(self):
         return self.as_polar()[1]
 
+    def truncate(self, max_magnitude):
+        v = Vector(self)
+        if v.magnitude() > max_magnitude:
+            v.scale_to_length(max_magnitude)
+        return v
+
+    def truncate_ip(self, max_magnitude):
+        if self.magnitude() > max_magnitude:
+            self.scale_to_length(max_magnitude)
+
     @classmethod
     def random(cls, **kwargs):
         max_magnitude = kwargs.get("max_magnitude")
