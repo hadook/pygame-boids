@@ -17,8 +17,8 @@ def main():
         boids.append(boid)
         flock.add(boid)
 
-    for i in range(10):
-        boid = Boid(pygame.Color('indianred'))
+    for i in range(20):
+        boid = Boid(pygame.Color('darkmagenta'))
         boids.append(boid)
         flock.add(boid)
 
@@ -36,14 +36,14 @@ def main():
 
         # separation
         for b in boids:
-            b.separate(boids)
+            b.separation(boids)
 
         screen.fill((30, 30, 30))
         flock.update()
         flock.draw(screen)
         pygame.display.flip()
         clock.tick(60)
-        print(clock.get_fps())
+        # print(clock.get_fps())
 
 
 if __name__ == "__main__":

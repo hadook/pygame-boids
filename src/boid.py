@@ -51,7 +51,7 @@ class Boid(pygame.sprite.Sprite):
             steering = (desired_velocity - self.velocity).truncate(self.max_force)
             self.velocity = (self.velocity + steering).truncate(self.max_speed)
 
-    def separate(self, boids):
+    def separation(self, boids):
         steering = Vector()
         for other in boids:
             v = self.position - other.position
