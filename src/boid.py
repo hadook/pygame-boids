@@ -23,7 +23,7 @@ class Boid(pygame.sprite.Sprite):
         self.rect = self.art.get_rect(center=self.position)
 
     def load_art(self):
-        art = pygame.image.load('../art/boid.png')
+        art = pygame.image.load('./art/boid.png')
         hue = pygame.Surface(art.get_size()).convert_alpha()
         hue.fill(self.color.correct_gamma(triangular(0.8, 1.2, 1)))
         art.blit(hue, (0, 0), special_flags=pygame.BLEND_MULT)
